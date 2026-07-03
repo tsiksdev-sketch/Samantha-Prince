@@ -44,16 +44,10 @@ const memoryImages = [
           <h2 className="mt-4 text-4xl md:text-6xl">Where We Met</h2>
           <div className="mx-auto my-8 h-px w-16" style={{ backgroundColor: "var(--accent)" }} />
           <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
-            It was a rainy afternoon in October when Samantha ducked into a small
-            corner café to escape the storm. Prince was already there, nursing
-            a cortado and reading a worn paperback. She asked to share his
-            table — the only one left by the window — and he closed his book.
+             The beutiful love story of Prince and Sam begins in august 2020 in the colllege cafeteria. Two strangers, sitting alone , find each other sharing a cute conversation at length bonding over
+         food and ending with a shared slice of Caramel swirl cake. We are inseperable from that day and a few weeks later , we confesed our love for each other. A million dates and "I love you's" later, we are ready for our next chapter on the 4th of October where we cant wait to spend the rest of our lives together living our story.
           </p>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
-            Three hours, two more coffees, and one shared umbrella later, they
-            walked out into a clearing sky. Neither of them remembers what the
-            book was about.
-          </p>
+         
         </div>
       </section>
 
@@ -107,9 +101,8 @@ const memoryImages = [
         <h2 className="mt-4 text-5xl md:text-7xl">He Proposed</h2>
         <div className="mx-auto my-8 h-px w-24 bg-white/60" />
         <p className="text-lg leading-relaxed text-white/90 md:text-xl">
-          On a cliff above the Atlantic, with the sun sinking into the water
-          and the wind stealing half his rehearsed speech, Prince knelt down
-          and asked the only question that mattered.
+         the beutiful love story of Prince and Sam begins in august 2020 in the colllege cafeteria. Two strangers, sitting alone , find each other sharing a cute conversation at length bonding over
+         food and ending with a shared slice of Caramel swirl cake. We are inseperable from that day and a few weeks later , we confesed our love for each other. A million dates and "I love you's" later, we are ready for our next chapter on the 4th of October where we cant wait to spend the rest of our lives together living our story.
         </p>
       </ParallaxSection>
 
