@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { APP_NAME, APP_DESCRIPTION,APP_SLOGAN } from "@/lib/constants";
-import { SmoothScroll } from "@/components/SmoothScroll";
-import CustomCursor from "@/components/Cursor";
-import ScrollToTop from "@/components/ScrollToTop";
 import { Preloader } from "@/components/preloader";
 
 

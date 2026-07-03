@@ -1,10 +1,10 @@
 import React from 'react'
-import { Navbar } from './navbar'
+import {  SiteHeader } from './navbar'
 
 function Header() {
   return (
     <header>
-     <Navbar />
+     <SiteHeader />
     </header>
   )
 }
