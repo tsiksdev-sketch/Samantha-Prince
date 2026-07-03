@@ -1,6 +1,5 @@
 
-import HomePge from '@/components/home/home'
-import { Home } from 'lucide-react'
+import Home from '@/components/home/home'
 import React from 'react'
 
 
@@ -8,7 +7,7 @@ import React from 'react'
 function page() {
   return (
     <main > 
-        <HomePge/>
+       <Home/>
     </main>
   
   )
