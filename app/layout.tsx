@@ -5,6 +5,7 @@ import { APP_NAME, APP_DESCRIPTION,APP_SLOGAN } from "@/lib/constants";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import CustomCursor from "@/components/Cursor";
 import ScrollToTop from "@/components/ScrollToTop";
+import { Preloader } from "@/components/preloader";
 
 
 
@@ -39,7 +40,7 @@ export default function RootLayout({
     
       <body>
        
-      
+      <Preloader/>
      {children}
         
       

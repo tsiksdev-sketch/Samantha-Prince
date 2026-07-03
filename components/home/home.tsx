@@ -44,7 +44,7 @@ const memoryImages = [
           <h2 className="mt-4 text-4xl md:text-6xl">Where We Met</h2>
           <div className="mx-auto my-8 h-px w-16" style={{ backgroundColor: "var(--accent)" }} />
           <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
-             The beutiful love story of Prince and Sam begins in august 2020 in the colllege cafeteria. Two strangers, sitting alone , find each other sharing a cute conversation at length bonding over
+             The beautiful love story of Prince and Sam begins in august 2020 in the colllege cafeteria. Two strangers, sitting alone , find each other sharing a cute conversation at length bonding over
          food and ending with a shared slice of Caramel swirl cake. We are inseperable from that day and a few weeks later , we confesed our love for each other. A million dates and "I love you's" later, we are ready for our next chapter on the 4th of October where we cant wait to spend the rest of our lives together living our story.
           </p>
          
@@ -56,12 +56,7 @@ const memoryImages = [
         <p className="text-xs uppercase tracking-[0.4em] text-white/80">Chapter Two</p>
         <h2 className="mt-4 text-5xl md:text-7xl">Best Friends</h2>
         <div className="mx-auto my-8 h-px w-24 bg-white/60" />
-        <p className="text-lg leading-relaxed text-white/90 md:text-xl">
-          Before the love letters and the late-night promises, there were
-          sunday morning runs, terrible karaoke, and a shared appreciation for
-          overpriced pastries. We were friends first — and it turns out that's
-          the best foundation of all.
-        </p>
+      
       </ParallaxSection>
 
       {/* 4. Gallery */}
@@ -100,10 +95,7 @@ const memoryImages = [
         <p className="text-xs uppercase tracking-[0.4em] text-white/80">Chapter Three</p>
         <h2 className="mt-4 text-5xl md:text-7xl">He Proposed</h2>
         <div className="mx-auto my-8 h-px w-24 bg-white/60" />
-        <p className="text-lg leading-relaxed text-white/90 md:text-xl">
-         the beutiful love story of Prince and Sam begins in august 2020 in the colllege cafeteria. Two strangers, sitting alone , find each other sharing a cute conversation at length bonding over
-         food and ending with a shared slice of Caramel swirl cake. We are inseperable from that day and a few weeks later , we confesed our love for each other. A million dates and "I love you's" later, we are ready for our next chapter on the 4th of October where we cant wait to spend the rest of our lives together living our story.
-        </p>
+        
       </ParallaxSection>
 
       {/* 5. She Said Yes */}
@@ -117,9 +109,7 @@ const memoryImages = [
           Yes.
         </h2>
         <div className="mx-auto my-8 h-px w-24 bg-white/60" />
-        <p className="text-lg leading-relaxed text-white/90 md:text-xl">
-          And just like that, the next chapter began.
-        </p>
+       
       </ParallaxSection>
 
   
