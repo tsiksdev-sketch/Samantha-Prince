@@ -14,10 +14,7 @@ export function SiteFooter() {
             <p className="mt-2 text-foreground">04 · 10 · 2026</p>
           </div>
           <div className="hidden h-8 w-px bg-border md:block" />
-          <div>
-            <p className="text-xs opacity-60">The Place</p>
-            <p className="mt-2 text-foreground">Rosewood Gardens</p>
-          </div>
+        
           <div className="hidden h-8 w-px bg-border md:block" />
           <div>
             <p className="text-xs opacity-60">The Dress Code</p>

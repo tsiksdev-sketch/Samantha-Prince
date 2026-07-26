@@ -13,10 +13,10 @@ const THEMES = [
 ] as const;
 
 const NAV = [
-  { to: "/", label: "Our Story" },
-  { to: "/when-where", label: "When & Where" },
-  { to: "/gallery", label: "Gallery" },
-  { to: "/rsvp", label: "RSVP" },
+  { to: "#story", label: "Our Story" },
+  { to: "#when", label: "When & Where" },
+  { to: "#gallery", label: "Gallery" },
+  { to: "#rsvp", label: "RSVP" },
 ] as const;
 
 export function SiteHeader() {

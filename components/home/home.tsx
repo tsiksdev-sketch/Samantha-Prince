@@ -1,8 +1,10 @@
 
 
 
+
 import { ParallaxSection } from "../parallax";
 import Image from "next/image";
+import RsvpForm from "./rsvp";
 
 
 
@@ -23,7 +25,7 @@ const memoryImages = [
 
 
   return (
-    <main className="relative">
+    <main id='story' className="relative">
       {/* 1. Hero — Our Story */}
       <ParallaxSection image='/couple-1.jpg'>
         <p className="script mb-4 text-3xl md:text-5xl" style={{ color: "var(--accent)" }}>
@@ -38,7 +40,7 @@ const memoryImages = [
       </ParallaxSection>
 
       {/* 2. Where they met */}
-      <section className="bg-background px-6 py-28 md:py-40">
+      <section id='when' className="bg-background px-6 py-28 md:py-40">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Chapter One</p>
           <h2 className="mt-4 text-4xl md:text-6xl">Where We Met</h2>
@@ -60,15 +62,13 @@ const memoryImages = [
       </ParallaxSection>
 
       {/* 4. Gallery */}
-      <section className="bg-background px-6 py-28 md:py-40">
+      <section id='gallery' className="bg-background px-6 py-28 md:py-40">
         <div className="mx-auto max-w-6xl">
           <div className="mb-16 text-center">
             <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Chapter Three</p>
             <h2 className="mt-4 text-4xl md:text-6xl">Moments</h2>
             <div className="mx-auto my-8 h-px w-16" style={{ backgroundColor: "var(--accent)" }} />
-            <p className="mx-auto max-w-xl text-muted-foreground">
-              A few frames from the years in between.
-            </p>
+            
           </div>
 
        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6">
@@ -112,7 +112,9 @@ const memoryImages = [
        
       </ParallaxSection>
 
-  
+    <section id='rsvp' className="max-w-3xl mx-auto py-20">
+      <RsvpForm/>
+    </section>
     </main>
   );
 }
