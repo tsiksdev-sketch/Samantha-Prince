@@ -11,7 +11,7 @@ function buildEmailHtml(name: string, attending: string, imageUrl: string) {
   return `
   <div style="margin:0;padding:0;background-color:#f4f1ec;font-family:Georgia,'Times New Roman',serif;color:#33302b;">
     <div style="max-width:600px;margin:0 auto;background-color:#ffffff;">
-      <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlE5lW0JucTtz-qZSbOV6pu-HdJpakugFGcxt--0mlgMhWAhJ7ouUWVquyAHY3i0Uzljqxl04q_LAUfQNdmuk0LRD5tzltcBCUAE8jIO-NUseMeGDHirtWEjZSmLyUIcwah6h6y1Q=w408-h612-k-no" alt="${d.venueName}" width="600" style="display:block;width:100%;height:auto;" />
+      <img src="https://i.ibb.co/vvzCQbjQ/Whats-App-Image-2026-07-31-at-1-07-34-PM.jpg" alt="${d.venueName}" width="600" style="display:block;width:100%;height:auto;" />
       <div style="padding:40px 40px 48px;">
         <p style="margin:0;text-transform:uppercase;letter-spacing:4px;font-size:11px;color:#a1875c;text-align:center;">
           ${isAttending ? "We can't wait to celebrate with you" : "We'll miss you dearly"}
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
       request.headers.get("origin") ??
       `${request.nextUrl.protocol}//${request.headers.get("host")}`
     const imageUrl = '/venue.png'
-    const ownerEmail = process.env.OWNER_EMAIL ?? WEDDING_DETAILS.ownerEmail
+    const ownerEmail = process.env.OWNER_EMAIL  ?? WEDDING_DETAILS.ownerEmail
 
     // Function 1: send a confirmation email to the guest who submitted the RSVP.
     const guestSend = resend.emails.send({
@@ -156,7 +156,7 @@ export async function POST(request: NextRequest) {
     // Function 2: notify the wedding owner of the RSVP response.
     const ownerSend = resend.emails.send({
       from: `RSVP Notifications <contact@africarbontraining.com>`,
-      to: [ownerEmail],
+      to: [ownerEmail,"princetmutasa@gmail.com" ],
       replyTo: email,
       subject: `New RSVP: ${name} ${attending === "yes" ? "is attending" : "cannot attend"}`,
       html: buildOwnerHtml({ name, email, attending, meal, note }),
