@@ -46,22 +46,22 @@ const memoryImages = [
           <h2 className="mt-4 text-4xl md:text-6xl">Where We Met</h2>
           <div className="mx-auto my-8 h-px w-16" style={{ backgroundColor: "var(--accent)" }} />
           <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
-             The beautiful love story of Prince and Sam begins in August 2020 in the colllege cafeteria. Two strangers, sitting alone , find each other sharing a cute conversation at length bonding over
-         food and ending with a shared slice of Caramel swirl cake. We were inseparable from that day and a few weeks later , we confessed our love for each other. A million dates and "I love you's" later, we are ready for our next chapter on the 4th of October where we cant wait to spend the rest of our lives together living our story.
+             The beautiful love story of Prince and Sam begins in August 2020 in the college cafeteria. Two strangers, sitting alone , find each other sharing a cute conversation at length bonding over
+         food and ending with a shared slice of Caramel swirl cake. We were inseparable from that day and a few weeks later , we confessed our love for each other. A million dates and "I love you's" later, we are ready for our next chapter on the 4th of October where we can't wait to spend the rest of our lives together living our story.
           </p>
          
         </div>
       </section>
 
       {/* 3. Best Friends parallax */}
-      <ParallaxSection image='/best-friends.jpg'>
+      <ParallaxSection image='/ab.jpeg'>
         <p className="text-xs uppercase tracking-[0.4em] text-white/80">Chapter Two</p>
         <h2 className="mt-4 text-5xl md:text-7xl">Best Friends</h2>
         <div className="mx-auto my-8 h-px w-24 bg-white/60" />
       
       </ParallaxSection>
 
-      {/* 4. Gallery */}
+      {/* 4. Gallery 
       <section id='gallery' className="bg-background px-6 py-28 md:py-40">
         <div className="mx-auto max-w-6xl">
           <div className="mb-16 text-center">
@@ -88,9 +88,9 @@ const memoryImages = [
       ))}
     </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* 5. He Proposed */}
+      {/* 5. He Proposed 
       <ParallaxSection image='/he-proposed.jpg'>
         <p className="text-xs uppercase tracking-[0.4em] text-white/80">Chapter Three</p>
         <h2 className="mt-4 text-5xl md:text-7xl">He Proposed</h2>
@@ -98,7 +98,7 @@ const memoryImages = [
         
       </ParallaxSection>
 
-      {/* 5. She Said Yes */}
+      
       <ParallaxSection image='/she-said-yes.jpg'>
         <p className="text-xs uppercase tracking-[0.4em] text-white/80">Chapter Four</p>
         <h2 className="mt-4 text-6xl md:text-8xl">
@@ -110,7 +110,7 @@ const memoryImages = [
         </h2>
         <div className="mx-auto my-8 h-px w-24 bg-white/60" />
        
-      </ParallaxSection>
+      </ParallaxSection> */}
 
     <section id='rsvp' className="max-w-3xl mx-auto py-20">
       <RsvpForm/>

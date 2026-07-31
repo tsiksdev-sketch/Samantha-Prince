@@ -39,16 +39,9 @@ export default function RootLayout({
        
       <Preloader/>
      {children}
-        
       
-    
-    
-
       </body>
-      
-
-     
-
+    
     </html>
   );
 }

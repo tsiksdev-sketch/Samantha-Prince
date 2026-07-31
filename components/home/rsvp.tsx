@@ -4,13 +4,13 @@ import type React from "react"
 import { useState } from "react"
 import { rsvpSchema } from "@/lib/rsvp-schema"
 
-type FieldErrors = Partial<Record<"name" | "email" | "attending" | "guests" | "note", string[]>>
+type FieldErrors = Partial<Record<"name" | "email" | "attending" | "meal" | "note", string[]>>
 
 const initialForm = {
   name: "",
   email: "",
-  guests: "1",
   attending: "yes",
+  meal:"meaterian-diet",
   note: "",
 }
 
@@ -77,6 +77,7 @@ export default function RsvpForm() {
         
           Form
         </h2>
+        <p className="p-4 font-bold text-">Rsvp by 1 September 2026 - Strictly by invite , no children and no plus ones allowed </p>
     <form onSubmit={handleSubmit} className="space-y-8" noValidate>
       <div>
         <label htmlFor="name" className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
@@ -91,8 +92,7 @@ export default function RsvpForm() {
         />
         {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name[0]}</p>}
       </div>
-
-      <div>
+         <div>
         <label htmlFor="email" className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
           Email
         </label>
@@ -106,6 +106,8 @@ export default function RsvpForm() {
         />
         {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email[0]}</p>}
       </div>
+      
+
 
       <div className="grid grid-cols-2 gap-6">
         <div>
@@ -122,7 +124,21 @@ export default function RsvpForm() {
             <option value="no">Regretfully declines</option>
           </select>
         </div>
-        <div>
+          <div>
+          <label htmlFor="guests" className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            Meal
+          </label>
+          <select
+            id="meal"
+            value={form.meal}
+            onChange={(e) => setForm({ ...form, meal: e.target.value })}
+            className="mt-2 w-full border-b border-border bg-transparent py-2 text-lg outline-none focus:border-accent"
+          >
+            <option value="meaterian-diet">Meaterian-diet</option>
+            <option value="vegeterian-diet">Vegeterian-diet</option>
+          </select>
+        </div>
+       {/* <div>
           <label htmlFor="guests" className="block text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             Guests
           </label>
@@ -135,7 +151,7 @@ export default function RsvpForm() {
             <option value="1">1</option>
             <option value="2">2</option>
           </select>
-        </div>
+        </div>  */}
       </div>
 
       <div>

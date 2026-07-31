@@ -68,7 +68,7 @@ function buildOwnerHtml(data: {
   name: string
   email: string
   attending: string
-  guests: string
+  meal:string
   note?: string
 }) {
   const isAttending = data.attending === "yes"
@@ -88,13 +88,14 @@ function buildOwnerHtml(data: {
           <td style="padding:8px 0;text-transform:uppercase;letter-spacing:2px;font-size:11px;color:#a1875c;">Email</td>
           <td style="padding:8px 0;"><a href="mailto:${data.email}" style="color:#a1875c;">${data.email}</a></td>
         </tr>
+      
         <tr>
           <td style="padding:8px 0;text-transform:uppercase;letter-spacing:2px;font-size:11px;color:#a1875c;">Attending</td>
           <td style="padding:8px 0;">${isAttending ? "Yes" : "No"}</td>
         </tr>
-        <tr>
+         <tr>
           <td style="padding:8px 0;text-transform:uppercase;letter-spacing:2px;font-size:11px;color:#a1875c;">Guests</td>
-          <td style="padding:8px 0;">${data.guests}</td>
+          <td style="padding:8px 0;">${data.meal}</td>
         </tr>
         ${
           data.note
@@ -123,7 +124,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { name, email, attending, guests, note } = parsed.data
+    const { name, email, attending, meal, note } = parsed.data
 
     if (!process.env.RESEND_API_KEY) {
       return NextResponse.json(
@@ -154,7 +155,7 @@ export async function POST(request: NextRequest) {
       to: [ownerEmail],
       replyTo: email,
       subject: `New RSVP: ${name} ${attending === "yes" ? "is attending" : "cannot attend"}`,
-      html: buildOwnerHtml({ name, email, attending, guests, note }),
+      html: buildOwnerHtml({ name, email, attending, meal, note }),
     })
 
     const [guestResult, ownerResult] = await Promise.all([guestSend, ownerSend])
