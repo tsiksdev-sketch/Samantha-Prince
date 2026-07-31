@@ -4,7 +4,7 @@ import { rsvpSchema, WEDDING_DETAILS } from "@/lib/rsvp-schema"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-function buildEmailHtml(name: string, attending: string, imageUrl: string) {
+function buildEmailHtml(name: string, attending: string) {
   const d = WEDDING_DETAILS
   const isAttending = attending === "yes"
 
@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
       from: `${WEDDING_DETAILS.couple} <contact@africarbontraining.com>`,
       to: [email],
       subject: `Thank you for your RSVP, ${name.split(" ")[0]}!`,
-      html: buildEmailHtml(name, attending, imageUrl),
+      html: buildEmailHtml(name, attending),
     })
 
     // Function 2: notify the wedding owner of the RSVP response.
