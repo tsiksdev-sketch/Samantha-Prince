@@ -1,9 +1,5 @@
 
-
-
-
 import { ParallaxSection } from "../parallax";
-import Image from "next/image";
 import RsvpForm from "./rsvp";
 
 
@@ -54,7 +50,7 @@ const memoryImages = [
       </section>
 
       {/* 3. Best Friends parallax */}
-      <ParallaxSection image='/ab.jpeg'>
+      <ParallaxSection image='/couple-1.jpg'>
         <p className="text-xs uppercase tracking-[0.4em] text-white/80">Chapter Two</p>
         <h2 className="mt-4 text-5xl md:text-7xl">Best Friends</h2>
         <div className="mx-auto my-8 h-px w-24 bg-white/60" />

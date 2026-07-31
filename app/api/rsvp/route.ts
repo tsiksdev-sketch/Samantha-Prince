@@ -11,7 +11,7 @@ function buildEmailHtml(name: string, attending: string, imageUrl: string) {
   return `
   <div style="margin:0;padding:0;background-color:#f4f1ec;font-family:Georgia,'Times New Roman',serif;color:#33302b;">
     <div style="max-width:600px;margin:0 auto;background-color:#ffffff;">
-      <img src="${imageUrl}" alt="${d.venueName}" width="600" style="display:block;width:100%;height:auto;" />
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlE5lW0JucTtz-qZSbOV6pu-HdJpakugFGcxt--0mlgMhWAhJ7ouUWVquyAHY3i0Uzljqxl04q_LAUfQNdmuk0LRD5tzltcBCUAE8jIO-NUseMeGDHirtWEjZSmLyUIcwah6h6y1Q=w408-h612-k-no" alt="${d.venueName}" width="600" style="display:block;width:100%;height:auto;" />
       <div style="padding:40px 40px 48px;">
         <p style="margin:0;text-transform:uppercase;letter-spacing:4px;font-size:11px;color:#a1875c;text-align:center;">
           ${isAttending ? "We can't wait to celebrate with you" : "We'll miss you dearly"}
@@ -50,6 +50,10 @@ function buildEmailHtml(name: string, attending: string, imageUrl: string) {
               <tr>
                 <td style="padding:8px 0;text-transform:uppercase;letter-spacing:2px;font-size:11px;color:#a1875c;">Dress code</td>
                 <td style="padding:8px 0;">${d.dressCode}</td>
+              </tr>
+                <tr>
+                <td style="padding:8px 0;text-transform:uppercase;letter-spacing:2px;font-size:11px;color:#a1875c;">Location</td>
+                <td style="padding:8px 0;">${d.direction}</td>
               </tr>
             </table>
           </td></tr>
@@ -137,7 +141,7 @@ export async function POST(request: NextRequest) {
     const origin =
       request.headers.get("origin") ??
       `${request.nextUrl.protocol}//${request.headers.get("host")}`
-    const imageUrl = `${origin}/wedding-venue.png`
+    const imageUrl = '/venue.png'
     const ownerEmail = process.env.OWNER_EMAIL ?? WEDDING_DETAILS.ownerEmail
 
     // Function 1: send a confirmation email to the guest who submitted the RSVP.

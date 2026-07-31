@@ -31,4 +31,5 @@ export const WEDDING_DETAILS = {
     "For women: knee-length, midi, or tea-length dresses are recommended<br/>" +
     "For men: suits with ties are required. Please choose footwear that's comfortable for standing and dancing",
   ownerEmail: "sammytgumbo@gmail.com",
+   direction:"Location: https://maps.app.goo.gl/SdTV9Vx1T6sKcrDS9?g_st=aw"
 } as const

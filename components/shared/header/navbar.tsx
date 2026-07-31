@@ -15,7 +15,6 @@ const THEMES = [
 const NAV = [
   { to: "#story", label: "Our Story" },
   { to: "#when", label: "When & Where" },
-  { to: "#gallery", label: "Gallery" },
   { to: "#rsvp", label: "RSVP" },
 ] as const;
 
