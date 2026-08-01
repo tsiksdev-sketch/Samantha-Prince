@@ -64,6 +64,8 @@ function buildEmailHtml(name: string, attending: string) {
           <strong>${d.couple}</strong>
         </p>
       </div>
+       <img src="https://i.ibb.co/84r7FL34/IMG-20260731-WA0011-1.jpg" alt="location" width="600" style="display:block;width:100%;height:auto;" />
+      
     </div>
   </div>`
 }
