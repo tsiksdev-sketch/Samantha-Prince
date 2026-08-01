@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { APP_NAME, APP_DESCRIPTION,APP_SLOGAN } from "@/lib/constants";
-import { Preloader } from "@/components/preloader";
+import { WeddingPreloader } from "@/components/InvitationPreloader";
 
 
 
@@ -37,7 +37,7 @@ export default function RootLayout({
     
       <body>
        
-      <Preloader/>
+  <WeddingPreloader/>
      {children}
       
       </body>
