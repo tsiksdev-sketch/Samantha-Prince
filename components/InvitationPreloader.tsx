@@ -1,109 +1,142 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+type Stage = "sealed" | "opening" | "revealing" | "done";
 
-type Phase = "sealed" | "opening" | "revealing" | "done";
+export default function WeddingInvitationPreloader({
+  onDone,
+}: {
+  onDone?: () => void;
+}) {
+  const [stage, setStage] = useState<Stage>("sealed");
+  const [press, setPress] = useState(false);
 
-const STORAGE_KEY = "sp-invitation-opened";
+  // Preloader behavior: lock scroll while not done, and ensure body unlocks on unmount
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = stage === "done" ? prevOverflow : "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [stage]);
 
-export function WeddingPreloader() {
-  const [mounted, setMounted] = useState(false);
-  const [phase, setPhase] = useState<Phase>("sealed");
+  // Move stages automatically when user opens (matches "first code" feel)
+  useEffect(() => {
+    if (stage !== "opening") return;
+
+    const t1 = window.setTimeout(() => setStage("revealing"), 1250);
+    return () => window.clearTimeout(t1);
+  }, [stage]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
-    setMounted(true);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
+    if (stage !== "revealing") return;
+
+    const t2 = window.setTimeout(() => {
+      setStage("done");
+      onDone?.();
+    }, 1000);
+
+    return () => window.clearTimeout(t2);
+  }, [stage, onDone]);
+
+  const opened = stage !== "sealed";
 
   const open = () => {
-    if (phase !== "sealed") return;
-    setPhase("opening");
-    window.setTimeout(() => setPhase("revealing"), 2500);
-    window.setTimeout(() => {
-      sessionStorage.setItem(STORAGE_KEY, "1");
-      document.body.style.overflow = "";
-      setPhase("done");
-    }, 4400);
+    if (stage !== "sealed") return;
+    setPress(true);
+    window.setTimeout(() => setPress(false), 180);
+    setStage("opening");
   };
 
-  if (!mounted || phase === "done") return null;
-
-  const opened = phase !== "sealed";
+  if (stage === "done") return null;
 
   return (
     <div
       className={`fixed inset-0 z-100 grid place-items-center overflow-hidden transition-opacity duration-700 ${
-        phase === "revealing" ? "opacity-0 pointer-events-none" : "opacity-100"
+        stage === "revealing" ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
       style={{
         background:
           "radial-gradient(120% 100% at 50% 0%, #f7e9e6 0%, #efd9d5 45%, #d9b7b3 100%)",
       }}
       role="dialog"
-      aria-label="Wedding invitation"
+      aria-label="Wedding invitation preloader"
     >
+      <style>{`
+        @keyframes sp-pulse {
+          0% { box-shadow: 0 0 0 0 rgba(122,42,50,0.35); }
+          70% { box-shadow: 0 0 0 26px rgba(122,42,50,0); }
+          100% { box-shadow: 0 0 0 0 rgba(122,42,50,0); }
+        }
+        @keyframes seal-breathe {
+          0%,100% { transform: translate(-50%,-50%) scale(1); }
+          50% { transform: translate(-50%,-50%) scale(1.035); }
+        }
+      `}</style>
+
       {/* soft vignette */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{ boxShadow: "inset 0 0 220px rgba(90,40,45,0.28)" }}
       />
 
+      {/* main “invitation” composition */}
       <div
         className="relative"
-        style={{ perspective: "1400px", width: "min(86vw, 380px)" }}
+        style={{
+          perspective: "1400px",
+          width: "min(86vw, 380px)",
+        }}
       >
-        {/* ── invitation card (rises out and unfolds open) ── */}
+        {/* invitation card (rises out / unfolds feel) */}
         <div
-          className={`absolute inset-x-3 bottom-3 top-3 transition-all duration-1400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            opened ? "z-30" : "z-[-1]"
-          }`}
+          className="absolute inset-x-3 bottom-3 top-3 transition-all duration-1400 ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{
-            backgroundColor: "transparent",
-            transitionDelay: opened ? "300ms" : "0ms",
-            transform: opened
-              ? "translateY(-16%) scale(1.03)"
-              : "translateY(6%) scale(0.97)",
+            transform: opened ? "translateY(-16%) scale(1.03)" : "translateY(6%) scale(0.97)",
             opacity: opened ? 1 : 0,
             visibility: opened ? "visible" : "hidden",
-            perspective: "1400px",
+            transitionDelay: opened ? "300ms" : "0ms",
+            transformStyle: "preserve-3d",
           }}
         >
-          <div
-            className="relative h-full w-full transition-transform duration-1500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-            style={{
-              transformStyle: "preserve-3d",
-              transform: opened ? "rotateY(-180deg)" : "rotateY(0deg)",
-              transitionDelay: opened ? "700ms" : "0ms",
-            }}
-          >
+          {/* inside face text/design */}
+     <div
+  style={{
+    position: "relative",
+    height: "100%",
+    width: "100%",
+    transformStyle: "preserve-3d",
+    transform: opened ? "rotateY(-180deg)" : "rotateY(0deg)",
+
+    // ✅ avoid lint warning: don't use "transition" shorthand
+    transitionProperty: "transform",
+    transitionDuration: "1500ms",
+    transitionTimingFunction: "cubic-bezier(0.22,1,0.36,1)",
+    transitionDelay: opened ? "700ms" : "0ms",
+  }}
+>
             {/* Front cover */}
             <div
-              className="absolute inset-0 flex flex-col items-center justify-center rounded-sm px-6 text-center backface-hidden"
-            style={{
-  backgroundColor: "#fdf3ef",
-  backgroundImage: `url(/paper-texture.jpg)`,
-  backgroundSize: "cover",
-  boxShadow: "0 30px 60px -25px rgba(90,40,45,0.45)",
-}}
+              className="absolute inset-0 flex flex-col items-center justify-center rounded-sm px-6 text-center"
+              style={{
+                backgroundColor: "#fdf3ef",
+                backgroundImage: `url(/paper-texture.jpg)`,
+                backgroundSize: "cover",
+                boxShadow: "0 30px 60px -25px rgba(90,40,45,0.45)",
+                backfaceVisibility: "hidden",
+              }}
             >
               <div
-                className="absolute inset-3 rounded-xs border border-[#d9b7b3]/60"
+                className="absolute inset-3 rounded-xs border"
                 style={{
+                  borderColor: "rgba(217,183,179,0.6)",
                   background:
                     "linear-gradient(135deg, rgba(255,255,255,0.55), rgba(217,183,179,0.2))",
                 }}
               />
               <div className="relative z-10 flex flex-col items-center">
-                <div
-                  className="h-px w-12"
-                  style={{ background: "rgba(176,138,90,0.5)" }}
-                />
+                <div className="h-px w-12" style={{ background: "rgba(176,138,90,0.5)" }} />
                 <p
                   className="mt-4 text-[10px] uppercase"
                   style={{ letterSpacing: "0.35em", color: "#8a5b58" }}
@@ -117,19 +150,12 @@ export function WeddingPreloader() {
                     color: "#7a2a32",
                   }}
                 >
-                  Samantha
-                  <span
-                    className="mx-2 text-[1.8rem] align-middle"
-                    style={{ color: "#b08a5a" }}
-                  >
+                  <span className="mx-2 text-[1.8rem]" style={{ color: "#b08a5a" }}>
                     &
                   </span>
                   Prince
                 </h2>
-                <div
-                  className="mt-4 h-px w-12"
-                  style={{ background: "rgba(176,138,90,0.5)" }}
-                />
+                <div className="mt-4 h-px w-12" style={{ background: "rgba(176,138,90,0.5)" }} />
                 <img
                   src='/wax-seal.png'
                   alt="Wax seal monogram S & P"
@@ -139,17 +165,25 @@ export function WeddingPreloader() {
             </div>
 
             {/* Inside face */}
-            <div
-              className="absolute inset-0 flex flex-col items-center justify-center rounded-sm px-6 text-center backface-hidden"
-              style={{
-                transform: "rotateY(180deg)",
-                backgroundColor: "#fdf3ef",
-                backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.45)), url(/paper-texture.jpg)`,
-                backgroundSize: "cover",
-                boxShadow: "0 30px 60px -25px rgba(90,40,45,0.45)",
-              }}
-            >
-              {/* central fold crease */}
+           <div
+  style={{
+    position: "absolute",
+    inset: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "4px",
+    paddingInline: "24px",   // ✅ FIX (was paddingInline:'24px')
+    textAlign: "center",
+    transform: "rotateY(180deg)",
+    backgroundColor: "#fdf3ef",
+    backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.45)), url(/paper-texture.jpg)`,
+    backgroundSize: "cover",
+    boxShadow: "0 30px 60px -25px rgba(90,40,45,0.45)",
+    backfaceVisibility: "hidden",
+  }}
+>
               <div
                 className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2"
                 style={{
@@ -157,10 +191,7 @@ export function WeddingPreloader() {
                     "linear-gradient(180deg, transparent, rgba(122,42,50,0.12) 20%, rgba(122,42,50,0.12) 80%, transparent)",
                 }}
               />
-              <div
-                className="h-px w-16"
-                style={{ background: "rgba(122,42,50,0.4)" }}
-              />
+              <div className="h-px w-16" style={{ background: "rgba(122,42,50,0.4)" }} />
               <p
                 className="mt-5 text-[10px] uppercase"
                 style={{ letterSpacing: "0.42em", color: "#8a5b58" }}
@@ -169,16 +200,10 @@ export function WeddingPreloader() {
               </p>
               <h2
                 className="mt-6 text-[2.6rem] leading-[1.05]"
-                style={{
-                  fontFamily: "'Great Vibes', cursive",
-                  color: "#7a2a32",
-                }}
+                style={{ fontFamily: "'Great Vibes', cursive", color: "#7a2a32" }}
               >
                 Samantha
-                <span
-                  className="mx-2 text-[1.6rem] align-middle"
-                  style={{ color: "#b08a5a" }}
-                >
+                <span className="mx-2 text-[1.6rem]" style={{ color: "#b08a5a" }}>
                   &
                 </span>
                 <br />
@@ -192,10 +217,7 @@ export function WeddingPreloader() {
                 <br />
                 of your company
               </p>
-              <div
-                className="mt-7 h-px w-16"
-                style={{ background: "rgba(122,42,50,0.4)" }}
-              />
+              <div className="mt-7 h-px w-16" style={{ background: "rgba(122,42,50,0.4)" }} />
               <p
                 className="mt-5 text-[10px] uppercase"
                 style={{ letterSpacing: "0.3em", color: "#b08a5a" }}
@@ -206,7 +228,7 @@ export function WeddingPreloader() {
           </div>
         </div>
 
-        {/* ── envelope ── */}
+        {/* envelope + flaps */}
         <div
           className="relative aspect-3/4 w-full rounded-md transition-all duration-1200 ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{
@@ -221,14 +243,13 @@ export function WeddingPreloader() {
             transitionDelay: opened ? "900ms" : "0ms",
           }}
         >
-          {/* warm inner glow visible as flaps part */}
+          {/* warm inner glow */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 transition-opacity duration-600"
             style={{
               background:
                 "linear-gradient(160deg, rgba(255,214,160,0.45), rgba(255,238,214,0.2) 45%, transparent 70%)",
               opacity: opened ? 1 : 0,
-              transition: "opacity 600ms ease",
             }}
           />
 
@@ -237,20 +258,32 @@ export function WeddingPreloader() {
           <Flap texture='/paper-texture.jpg' side="left" opened={opened} />
           <Flap texture='/paper-texture.jpg' side="right" opened={opened} />
 
-          {/* wax seal */}
+          {/* wax seal button */}
           <button
             onClick={open}
             aria-label="Open the invitation"
+            disabled={stage !== "sealed"}
             className="group absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 outline-none"
             style={{
               width: "34%",
               transition: "transform 700ms cubic-bezier(0.22,1,0.36,1), opacity 500ms",
               transform: opened
                 ? "translate(-50%, 40%) rotate(24deg) scale(0.8)"
-                : "translate(-50%, -50%)",
+                : `translate(-50%, -50%) scale(${press ? 0.92 : 1})`,
               opacity: opened ? 0 : 1,
+              animation:
+                !opened && !press ? "seal-breathe 3.2s ease-in-out infinite" : undefined,
             }}
           >
+            <span
+              className="pointer-events-none absolute inset-0 rounded-full -z-10"
+              style={{
+                background:
+                  "radial-gradient(circle at 30% 26%, rgba(176,138,90,0.45), rgba(122,42,50,0.25), rgba(0,0,0,0) 70%)",
+                opacity: 0.25,
+                filter: "blur(12px)",
+              }}
+            />
             <span
               className="pointer-events-none absolute inset-0 rounded-full"
               style={{
@@ -277,14 +310,6 @@ export function WeddingPreloader() {
           </p>
         )}
       </div>
-
-      <style>{`
-        @keyframes sp-pulse {
-          0% { box-shadow: 0 0 0 0 rgba(122,42,50,0.35); }
-          70% { box-shadow: 0 0 0 26px rgba(122,42,50,0); }
-          100% { box-shadow: 0 0 0 0 rgba(122,42,50,0); }
-        }
-      `}</style>
     </div>
   );
 }
@@ -298,48 +323,53 @@ function Flap({
   opened: boolean;
   texture: string;
 }) {
-  const clip = {
+  const clip: Record<typeof side, string> = {
     top: "polygon(0 0, 100% 0, 50% 50%)",
     bottom: "polygon(0 100%, 100% 100%, 50% 50%)",
     left: "polygon(0 0, 0 100%, 50% 50%)",
     right: "polygon(100% 0, 100% 100%, 50% 50%)",
-  }[side];
+  };
 
-  const origin = {
+  const origin: Record<typeof side, string> = {
     top: "top center",
     bottom: "bottom center",
     left: "center left",
     right: "center right",
-  }[side];
+  };
 
-  const openTransform = {
+  const openTransform: Record<typeof side, string> = {
     top: "rotateX(-172deg)",
     bottom: "rotateX(172deg)",
     left: "rotateY(172deg)",
     right: "rotateY(-172deg)",
-  }[side];
+  };
 
-  const delay = { top: 0, left: 120, right: 120, bottom: 240 }[side];
+  const delay: Record<typeof side, number> = {
+    top: 0,
+    left: 120,
+    right: 120,
+    bottom: 240,
+  };
 
-  const shade = {
+  const shade: Record<typeof side, string> = {
     top: "linear-gradient(180deg, rgba(255,255,255,0.55), rgba(160,110,110,0.14))",
     bottom: "linear-gradient(0deg, rgba(255,255,255,0.4), rgba(160,110,110,0.18))",
     left: "linear-gradient(90deg, rgba(255,255,255,0.45), rgba(160,110,110,0.16))",
     right: "linear-gradient(270deg, rgba(255,255,255,0.45), rgba(160,110,110,0.16))",
-  }[side];
+  };
 
   return (
     <div
       className="absolute inset-0 z-10"
       style={{
-        clipPath: clip,
-        transformOrigin: origin,
+        clipPath: clip[side],
+        transformOrigin: origin[side],
         transformStyle: "preserve-3d",
-        backgroundImage: `${shade}, url(${texture})`,
+        backgroundImage: `${shade[side]}, url(${texture})`,
         backgroundSize: "cover",
         filter: "drop-shadow(0 1px 0 rgba(255,255,255,0.5))",
-        transform: opened ? openTransform : "rotateX(0deg) rotateY(0deg)",
-        transition: `transform 1100ms cubic-bezier(0.65,0,0.35,1) ${delay}ms`,
+        transform: opened ? openTransform[side] : "rotateX(0deg) rotateY(0deg)",
+        transition: `transform 1100ms cubic-bezier(0.65,0,0.35,1) ${delay[side]}ms`,
       }}
     />
   );
